@@ -4,7 +4,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 const prisma = new PrismaClient();
 
-export async function PUT(req, { params }) {
+export async function PUT(req) {
   try {
     const session = await getServerSession(authOptions);
     if (!session) {

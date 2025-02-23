@@ -35,7 +35,7 @@ export default function Transactions() {
     } else {
       fetchTransactions();
     }
-  }, [session, status]);
+  }, [session, status, router]);
 
   async function fetchTransactions() {
     try {
@@ -60,20 +60,20 @@ export default function Transactions() {
       const res = await fetch(`/api/transactions?baseCurrency=${from}`);
       const rates = await res.json();
 
-      console.log("📊 Exchange Rates:", rates); // ✅ Debugging output
+      console.log("📊 Exchange Rates:", rates); // debugging
 
       if (!rates || !rates[to]) {
         throw new Error("Invalid exchange rate data");
       }
 
-      return rates[to]; // ✅ Return the exchange rate for the requested currency
+      return rates[to]; // Return the exchange rate for the requested currency
     } catch (error) {
       console.error("Error fetching exchange rate:", error);
       return null;
     }
   }
 
-  // 🟢 Fill form when clicking a transaction
+  // Fill form when clicking a transaction
   function handleTransactionClick(transaction: Transaction) {
     setFormData({
       id: transaction.id,
@@ -87,7 +87,7 @@ export default function Transactions() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (formData.id) {
-      // ✅ Update transaction
+      // Update transaction
       try {
         const res = await fetch(`/api/transactions/${formData.id}`, {
           method: "PUT",
@@ -114,7 +114,7 @@ export default function Transactions() {
         console.error("Error updating transaction:", error);
       }
     } else {
-      // ✅ Add new transaction
+      // Add new transaction
       try {
         const res = await fetch("/api/transactions", {
           method: "POST",
