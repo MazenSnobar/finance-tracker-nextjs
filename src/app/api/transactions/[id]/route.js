@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route.js";
 
 const prisma = new PrismaClient();
 
@@ -50,7 +50,10 @@ export async function DELETE(req, { params }) {
         return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
       }
   
-      const transactionId = params.id;
+      const transactionId = parseInt(params.id, 10);
+    if (isNaN(transactionId)) {
+      return new Response(JSON.stringify({ error: "Invalid transaction ID" }), { status: 400 });
+    }
   
       if (!transactionId) {
         return new Response(JSON.stringify({ error: "Transaction ID is required" }), { status: 400 });

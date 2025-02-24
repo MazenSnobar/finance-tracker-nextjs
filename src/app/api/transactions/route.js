@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions } from "../auth/[...nextauth]/route.js";
 
 const prisma = new PrismaClient();
 
@@ -116,6 +116,7 @@ export async function POST(req) {
         userId: parseInt(session.user.id),
       },
     });
+  
 
     return new Response(JSON.stringify(transaction), { status: 201 });
   } catch (error) {

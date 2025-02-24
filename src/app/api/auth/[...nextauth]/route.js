@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const authOptions = {
+export const authOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -41,7 +41,7 @@ const authOptions = {
   callbacks: {
     async session({ session, token }) {
       if (token.sub) {
-        session.user.id = token.sub; // Ensure session.user.id is set
+        session.user.id = token.sub; 
       }
       return session;
     },
