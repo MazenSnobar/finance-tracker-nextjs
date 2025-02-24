@@ -102,6 +102,10 @@ export async function POST(req) {
     if (!amount || !currency || !category) {
       return new Response(JSON.stringify({ error: "Missing required fields" }), { status: 400 });
     }
+    const userId = parseInt(session.user.id, 10);
+    if (isNaN(userId)) {
+      return new Response(JSON.stringify({ error: "Invalid user ID" }), { status: 400 });
+    }
 
     const transaction = await prisma.transaction.create({
       data: {

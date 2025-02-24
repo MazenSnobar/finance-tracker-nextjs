@@ -40,7 +40,9 @@ const authOptions = {
 
   callbacks: {
     async session({ session, token }) {
-      session.user.id = token.sub;
+      if (token.sub) {
+        session.user.id = token.sub; // Ensure session.user.id is set
+      }
       return session;
     },
     async jwt({ token, user }) {
